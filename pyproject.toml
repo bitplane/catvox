@@ -1,0 +1,30 @@
+[project]
+name = "catvox"
+description = "transcribe your voice to stdout"
+version = "0.1.0"
+authors = [
+    { name = "Gareth Davidson", email = "gaz@bitplane.net" }
+]
+dependencies = [
+    "openai-whisper",
+    "sounddevice",
+    "torch_weightsonly"
+]
+
+[project.optional-dependencies]
+dev = [
+    "flake8",
+    "pre-commit",
+    "pytest",
+    "coverage",
+    "pytest-cov",
+    "build",
+    "twine"
+]
+
+[build-system]
+build-backend = "flit_core.buildapi"
+requires = ["flit_core >=3.2,<4"]
+
+[project.scripts]
+catvox = "catvox:main.main"
