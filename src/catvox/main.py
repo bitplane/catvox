@@ -7,14 +7,15 @@ import time
 import numpy as np
 import sounddevice as sd
 
-DEBUG = False
-
 # Initialize variables
 audio_buffer = queue.Queue()  # Thread-safe queue for audio data
 model_loaded_event = threading.Event()
 model = None
 
 samplerate = 16000  # Whisper models are trained on 16kHz audio
+
+
+blacklist = ["you", "Thanks for watching!", "Thank you!", "Thank you."]
 
 
 # Callback function to capture audio
@@ -36,12 +37,12 @@ def load_model(name="base"):
 
 
 # Transcription thread function
-def transcribe_audio(max_length, duration, exit_event):
+def transcribe_audio(max_length, duration, exit_event, debug):
     """
     Continuously transcribe audio from the buffer.
     """
     global model
-    accumulated_audio = np.array([], dtype="float32")
+    buffer = np.array([], dtype="float32")
 
     current_transcript = ""
     previous_transcript = ""
@@ -52,44 +53,44 @@ def transcribe_audio(max_length, duration, exit_event):
     while not exit_event.is_set():
         try:
             # Wait for new audio data or timeout
-            data = audio_buffer.get(timeout=1)  # Blocks for up to 1 second
-            accumulated_audio = np.concatenate((accumulated_audio, data.flatten()))
+            data = audio_buffer.get(timeout=duration)
+            buffer = np.concatenate((buffer, data.flatten()))
 
             # Calculate the accumulated audio length in seconds
-            accumulated_audio_length = len(accumulated_audio) / samplerate
+            buffer_length = len(buffer) / samplerate
 
             # Transcribe audio when sufficient data accumulates
-            if (
-                len(accumulated_audio) >= samplerate * duration
-            ):  # Process every 'duration' seconds
+            if buffer_length >= duration * 2:
                 previous_transcript = current_transcript
-                result = model.transcribe(accumulated_audio, language="en")
-                current_transcript = result["text"].strip()
+                result = model.transcribe(buffer, language="en")
+                transcript = result["text"].strip()
+                if transcript not in blacklist:
+                    current_transcript = transcript
 
                 # Compare with previous transcript to detect pause in speech
                 if current_transcript != "":
                     if current_transcript == previous_transcript:
                         print(current_transcript, flush=True)
                         # Reset accumulated audio and transcripts
-                        accumulated_audio = np.array([], dtype="float32")
+                        buffer = np.array([], dtype="float32")
                         current_transcript = ""
                         previous_transcript = ""
-                    elif DEBUG:
+                    elif debug:
                         print(
-                            f"... ({len(accumulated_audio)}) ...",
+                            f"... ({len(buffer)}) ...",
                             current_transcript,
                             flush=True,
                         )
                 else:
                     # No transcript, reset accumulated audio
-                    accumulated_audio = np.array([], dtype="float32")
+                    buffer = np.array([], dtype="float32")
 
             # Flush the accumulation buffer if max_length is reached
-            if accumulated_audio_length >= max_length:
+            if buffer_length >= max_length:
                 if current_transcript != "":
                     print(current_transcript, flush=True)
                 # Reset accumulated audio and transcripts
-                accumulated_audio = np.array([], dtype="float32")
+                buffer = np.array([], dtype="float32")
                 current_transcript = ""
                 previous_transcript = ""
 
@@ -97,12 +98,12 @@ def transcribe_audio(max_length, duration, exit_event):
             # No data available; sleep briefly
             time.sleep(0.1)
         except Exception as e:
-            if DEBUG:
+            if debug:
                 print(f"Error in transcription thread: {e}", flush=True)
             pass
 
     # Clean up when exit_event is set
-    if DEBUG:
+    if debug:
         print("Transcription thread exiting", flush=True)
 
 
@@ -126,6 +127,13 @@ def main():
         default="base",
         help="Model size to use (e.g., tiny, base, small, medium, large)",
     )
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        default=False,
+        help="Spit debug stuff out to the console",
+    )
+
     args = parser.parse_args()
 
     exit_event = threading.Event()
@@ -133,7 +141,7 @@ def main():
     # Start the transcription thread
     transcription_thread = threading.Thread(
         target=transcribe_audio,
-        args=(args.max_length, args.duration, exit_event),
+        args=(args.max_length, args.duration, exit_event, args.debug),
         daemon=True,
     )
     transcription_thread.start()
@@ -156,11 +164,11 @@ def main():
                 time.sleep(0.5)  # Keep the main thread alive
     except KeyboardInterrupt:
         exit_event.set()
-        if DEBUG:
+        if args.debug:
             print("Main thread received KeyboardInterrupt", flush=True)
     finally:
         transcription_thread.join()
-        if DEBUG:
+        if args.debug:
             print("Program exiting", flush=True)
 
 
