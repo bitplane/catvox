@@ -2,6 +2,7 @@
 name = "catvox"
 description = "transcribe your voice to stdout"
 version = "0.2.0"
+readme = "README.md"
 authors = [
     { name = "Gareth Davidson", email = "gaz@bitplane.net" }
 ]
