@@ -3,10 +3,5 @@
     "python.testing.unittestEnabled": false,
     "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
     "python.analysis.extraPaths": ["${workspaceFolder}/merge-files/src"],
-    "python.envFile": "${workspaceFolder}/.env",
-    "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter"
-    },
-    "python.formatting.provider": "none",
-    "makefile.configureOnOpen": false
+
 }
