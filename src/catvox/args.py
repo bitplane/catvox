@@ -29,5 +29,23 @@ def parse_args():
         default=False,
         help="Spit debug stuff out to the console",
     )
+    parser.add_argument(
+        "--list-sources",
+        action="store_true",
+        default=False,
+        help="List available audio input sources",
+    )
+    parser.add_argument(
+        "--source",
+        type=str,
+        default=None,
+        help="Audio source index to use (see --list-sources)",
+    )
+    parser.add_argument(
+        "--list-devices",
+        action="store_true",
+        default=False,
+        help="List devices available for the selected source",
+    )
 
     return parser.parse_args()

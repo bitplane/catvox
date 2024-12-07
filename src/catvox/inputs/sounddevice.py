@@ -6,12 +6,12 @@ try:
 except ImportError:
     sd = None
 
-from . import MAX_QUEUE_SIZE, Audio
+from . import MAX_QUEUE_SIZE, Input
 
 logger = logging.getLogger(__name__)
 
 
-class SoundDevice(Audio):
+class SoundDevice(Input):
     """
     Audio source using the `sounddevice` library.
     """

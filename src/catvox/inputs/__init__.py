@@ -3,7 +3,7 @@ import abc
 MAX_QUEUE_SIZE = 100
 
 
-class Audio(abc.ABC):
+class Input(abc.ABC):
 
     is_available = True
 
