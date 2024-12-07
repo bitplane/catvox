@@ -2,7 +2,7 @@
 import logging
 
 from .args import parse_args
-from .audio.sounddevice import SoundDevice
+from .input.sounddevice import SoundDevice
 from .transcribe.whisper import Whisper
 
 logger = logging.getLogger(__name__)
