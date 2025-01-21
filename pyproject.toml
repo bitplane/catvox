@@ -1,7 +1,7 @@
 [project]
 name = "catvox"
-description = "transcribe your voice to stdout"
-version = "0.1.4"
+description = "like cat, but for voice"
+version = "0.2.0"
 readme = "README.md"
 authors = [
     { name = "Gareth Davidson", email = "gaz@bitplane.net" }
@@ -9,7 +9,8 @@ authors = [
 dependencies = [
     "openai-whisper",
     "sounddevice",
-    "torch_weightsonly"
+    "torch_weightsonly",
+    "streamz"
 ]
 
 [project.optional-dependencies]

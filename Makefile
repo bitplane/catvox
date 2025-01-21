@@ -4,6 +4,7 @@
 
 
 PROJECT_NAME := catvox
+EMOJI := 🗣️
 
 
 all: dev coverage  ## builds everything
@@ -39,13 +40,13 @@ release: scripts/release.sh ## publish to pypi
 .docs/index.html: .venv/.installed-dev scripts/docs.sh mkdocs.yml $(shell find -name '*.md')
 	scripts/docs.sh $(PROJECT_NAME)
 
-.venv/.installed: pyproject.toml .venv/bin/activate scripts/install.sh $(shell find src -name '*.py')
+.venv/.installed: pyproject.toml .venv/$(EMOJI)/bin/activate scripts/install.sh $(shell find src -name '*.py')
 	scripts/install.sh $(PROJECT_NAME)
 
-.venv/.installed-dev: pyproject.toml .venv/bin/activate scripts/install-dev.sh
+.venv/.installed-dev: pyproject.toml .venv/$(EMOJI)/bin/activate scripts/install-dev.sh
 	scripts/install-dev.sh $(PROJECT_NAME)
 
-.venv/bin/activate:
+.venv/$(EMOJI)/bin/activate:
 	scripts/venv.sh
 
 .git/hooks/pre-commit: scripts/install-pre-commit.sh
