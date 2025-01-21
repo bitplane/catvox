@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 rm -r .venv                                         2>/dev/null
 rm .coverage                                        2>/dev/null

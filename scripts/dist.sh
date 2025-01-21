@@ -1,5 +1,5 @@
-#!/bin/bash
+#!/bin/sh
 
-source .venv/bin/activate
+. ./scripts/activate.sh
 
 python -m build .

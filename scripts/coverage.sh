@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-source .venv/bin/activate
+. ./scripts/activate.sh
 
 pytest --cov="src/$1" --cov-report=html .

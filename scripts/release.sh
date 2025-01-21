@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source .venv/bin/activate
+. ./scripts/activate.sh
 
 # dirty
 VERSION=$(grep -E '^version[[:space:]]*=' pyproject.toml | sed -E 's/.*=[[:space:]]*"([^"]+)".*/\1/')

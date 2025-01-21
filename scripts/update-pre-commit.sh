@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-source .venv/bin/activate
+. ./scripts/activate.sh
 
 pre-commit autoupdate
 

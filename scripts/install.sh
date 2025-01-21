@@ -1,7 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-# activate venv
-source .venv/bin/activate
+. ./scripts/activate.sh
 
 set -e
 
