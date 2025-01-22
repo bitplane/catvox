@@ -3,8 +3,8 @@ import logging
 import sys
 
 from .args import parse_args
-from .inputs.sounddevice import SoundDevice
-from .inputs.sources import sources
+from .input.sounddevice import SoundDevice
+from .input.sources import sources
 from .transcribe.whisper import Whisper
 
 logger = logging.getLogger(__name__)
