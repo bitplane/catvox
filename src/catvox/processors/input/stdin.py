@@ -1,4 +1,4 @@
-from catvox.inputs import Input
+from . import Input
 
 
 class StdIn(Input):
@@ -6,6 +6,6 @@ class StdIn(Input):
     Takes stdin as input
     """
 
-    @staticmethod
-    def register_args(parser):
+    @classmethod
+    def add_arguments(cls, parser):
         pass
