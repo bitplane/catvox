@@ -1,4 +1,4 @@
-from .utils.args import ArgumentParser
+from .cli.args import ArgumentParser
 
 
 class PipelineBuilder:

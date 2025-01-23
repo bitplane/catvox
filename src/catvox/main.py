@@ -2,7 +2,7 @@
 import logging
 import sys
 
-from .args import parse_args
+from .cli.args import parse_args
 from .input.sounddevice import SoundDevice
 from .input.sources import sources
 from .transcribe.whisper import Whisper

@@ -1,4 +1,4 @@
-from catvox.utils.args import ArgumentParser, other
+from catvox.cli.args import ArgumentParser, other
 
 
 def test_copy_other():

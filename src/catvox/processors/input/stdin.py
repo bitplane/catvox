@@ -1,7 +1,7 @@
-from .input_stream import InputStream
+from catvox.inputs import Input
 
 
-class StdInSource(InputStream):
+class StdIn(Input):
     """
     Takes stdin as input
     """
