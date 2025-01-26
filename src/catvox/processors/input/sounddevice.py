@@ -1,10 +1,54 @@
+from ...cli.args import ArgumentParser, other
+from . import Input
+
+try:
+    import sounddevice as sd
+except ImportError:
+    sd = None
+
+
+class SoundDeviceInput(Input):
+    """
+    Uses the SoundDevice library to capture audio.
+    """
+
+    @classmethod
+    def check_args(cls, args):
+        """
+        Check if the processor is available with the given arguments.
+        """
+        if sd is None:
+            return False
+
+        # todo: check if device is available and other things like that
+
+        return True
+
+    @classmethod
+    def add_args(cls, parser: ArgumentParser):
+        parser.add_argument(
+            "--sounddevice-sample-rate",
+            type=int,
+            default=other("sample-rate"),
+            help="Sample rate for audio capture from sounddevice libarary",
+        )
+        parser.add_argument(
+            "--sounddevice-device",
+            type=int,
+            default="default",
+            help="Select specific input device",
+        )
+        parser.add_argument(
+            "--sounddevice-list-devices",
+            type=int,
+            default="default",
+            help="Select specific input device",
+        )
+
+
 # import logging
 # import queue
 
-# try:
-#     import sounddevice as sd
-# except ImportError:
-#     sd = None
 
 # from . import MAX_QUEUE_SIZE, Input
 

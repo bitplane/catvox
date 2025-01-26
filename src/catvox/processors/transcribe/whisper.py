@@ -1,27 +1,36 @@
-# import logging
-# import re
-# import sys
+import logging
+import re
 
+from .. import Processor
+
+# import sys
 # import numpy as np
 
-# from ..utils import monkeypipe  # noqa
-# from ..utils.classproperty import classproperty
 
-# logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
-# # Regular expression for depunctuation.
-# DEPUNCTUATE = re.compile(r"[!\"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~ \t]")
+# Regular expression for depunctuation.
+DEPUNCTUATE = re.compile(r"[!\"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~ \t]")
 
-# # Blacklist of phrases that we never print.
-# blacklist = [
-#     "you",
-#     "Thanks for watching!",
-#     "Thank you!",
-#     "Thank you.",
-#     "That's all for now. Thanks for watching.",
-#     ".",
-# ]
+
+# Blacklist of phrases that we never print.
+blacklist = [
+    "you",
+    "Thanks for watching!",
+    "Thank you!",
+    "Thank you.",
+    "That's all for now. Thanks for watching.",
+    ".",
+]
+
+
+class Whisper(Processor):
+    """
+    Transcribe audio to text using the Whisper model.
+    """
+
+    pass
 
 
 # def text_key(string):

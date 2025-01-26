@@ -18,8 +18,9 @@ class Processor(abc.ABC):
         self.disabled = False
         self._is_running = False
 
+    @classmethod
     @abc.abstractmethod
-    def check(self, args):
+    def check_args(cls, args):
         """
         Check if the processor is available with the given arguments.
         """
@@ -27,9 +28,17 @@ class Processor(abc.ABC):
 
     @classmethod
     @abc.abstractmethod
-    def add_arguments(cls, parser: ArgumentParser):
+    def add_args(cls, parser: ArgumentParser):
         """
         Add arguments to the command line parser.
+        """
+        pass
+
+    @classmethod
+    @abc.abstractmethod
+    def output_formats(cls):
+        """
+        Returns a list of supported output formats
         """
         pass
 
@@ -49,8 +58,9 @@ def get_processors():
                 is_processor = inspect.isclass(obj) and issubclass(obj, Processor)
                 can_create = not inspect.isabstract(obj)
 
-                if is_processor and can_create:
-                    processors.append(obj)
+                if is_processor:
+                    if can_create:
+                        processors.append(obj)
 
         except ImportError as e:
             logger.error(f"Failed to import {module_name}: {e}")

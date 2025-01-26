@@ -9,7 +9,7 @@ class PipelineBuilder:
 
     def _parse_args(self):
         parser = ArgumentParser(description="catvox - transcribe and print to stdout")
-        # --log-level=INFO
+
         parser.add_argument(
             "--log-level",
             type=str,
