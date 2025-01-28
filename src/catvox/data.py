@@ -1,42 +1,31 @@
-from dataclasses import dataclass
-
-
-class DataFormat(dataclass):
+class Data:
     """
-    Base class for all data formats.
+    A block of data passing through the pipeline
     """
 
+    def __init__(self, data, metadata=None):
+        self.data = data
+        self.metadata = metadata or {}
 
-class Audio(DataFormat):
-    """
-    Audio data as bytes
-    """
+    def match(self, pattern: dict, subtree=None):
+        """
+        Check if the metadata matches the pattern
+        """
+        if subtree is None:
+            subtree = self.metadata
 
-    rate: int
-    channels: int
+        for key, value in pattern.items():
+            if key not in subtree:
+                return False
+            elif isinstance(value, dict):
+                if not self.match(value, subtree[key]):
+                    return False
+            elif isinstance(value, list):
+                actual_set = set(subtree[key])
+                desired_set = set(value)
+                if not desired_set.issubset(actual_set):
+                    return False
+            elif subtree[key] != value:
+                return False
 
-
-class PCM(Audio):
-    """
-    PCM audio data as bytes
-    """
-
-
-class Text(DataFormat):
-    """
-    Plain text
-    """
-
-    language: str | None
-
-
-class Numpy(DataFormat):
-    """
-    Numpy array
-    """
-
-
-class Torch(DataFormat):
-    """
-    Torch tensor
-    """
+        return True

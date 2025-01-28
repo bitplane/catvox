@@ -1,4 +1,3 @@
-from ...cli.args import ArgumentParser
 from . import Output
 
 
@@ -12,5 +11,13 @@ class TextOutput(Output):
         return True
 
     @classmethod
-    def add_args(cls, parser: ArgumentParser):
+    def add_args(cls, parser):
         pass
+
+    @classmethod
+    def request(cls, format):
+        if "text" in format["type"]:
+            return {
+                "type": "text",
+                "format": format,
+            }

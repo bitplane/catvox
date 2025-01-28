@@ -7,7 +7,7 @@ except ImportError:
     sd = None
 
 
-class SoundDeviceInput(Input):
+class SoundDevice(Input):
     """
     Uses the SoundDevice library to capture audio.
     """
@@ -26,19 +26,20 @@ class SoundDeviceInput(Input):
 
     @classmethod
     def add_args(cls, parser: ArgumentParser):
-        parser.add_argument(
+        group = cls.add_arg_group(parser)
+        group.add_argument(
             "--sounddevice-sample-rate",
             type=int,
             default=other("sample-rate"),
             help="Sample rate for audio capture from sounddevice libarary",
         )
-        parser.add_argument(
+        group.add_argument(
             "--sounddevice-device",
             type=int,
             default="default",
             help="Select specific input device",
         )
-        parser.add_argument(
+        group.add_argument(
             "--sounddevice-list-devices",
             type=int,
             default="default",

@@ -3,13 +3,13 @@ from argparse import ArgumentParser
 from . import Input
 
 
-class FileInput(Input):
+class File(Input):
     """
-    Takes file paths as input
+    Takes file paths as input, like cat(1).
     """
 
     @classmethod
-    def check(cls, args):
+    def check_args(cls, args):
         """
         Check if the processor is available with the given arguments.
         """
@@ -20,10 +20,10 @@ class FileInput(Input):
 
     @classmethod
     def add_args(cls, parser: ArgumentParser):
-        parser.add_argument(
-            "files", nargs="+", help="Pipe these files into the pipeline"
-        )
-        parser.add_argument(
+        group = cls.add_arg_group(parser, hidden=False)
+        group.add_argument("file", nargs="+", help="Pipe these files into the pipeline")
+        group.add_argument(
             "--files-as-channels",
             help="Treat each file as a separate channel. Default is to concatenate.",
         )
+        return group

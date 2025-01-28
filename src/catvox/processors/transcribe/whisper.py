@@ -25,16 +25,16 @@ blacklist = [
 ]
 
 
+def text_key(string):
+    return DEPUNCTUATE.sub("", string.lower())
+
+
 class Whisper(Processor):
     """
     Transcribe audio to text using the Whisper model.
     """
 
     pass
-
-
-# def text_key(string):
-#     return DEPUNCTUATE.sub("", string.lower())
 
 
 # def output(text):

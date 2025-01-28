@@ -3,7 +3,8 @@ import importlib
 import inspect
 import logging
 import pkgutil
-from argparse import ArgumentParser
+
+from ..cli.args import ArgumentParser
 
 logger = logging.getLogger(__name__)
 
@@ -27,25 +28,47 @@ class Processor(abc.ABC):
         pass
 
     @classmethod
-    @abc.abstractmethod
-    def add_args(cls, parser: ArgumentParser):
+    def add_arg_group(cls, parser: ArgumentParser, hidden=True):
         """
-        Add arguments to the command line parser.
+        Add a section to the argument parser for this processor.
         """
-        pass
+        name = cls.__name__.lower()
+        group = parser.add_argument_group(
+            title=name, description=cls.__doc__, hidden=hidden
+        )
+        group.add_argument(
+            f"--{name}",
+            action="store_true",
+            default=False,
+            help=f"Explicitly use {name}",
+        )
+        group.add_argument(
+            f"--no-{name}",
+            dest=name,
+            action="store_false",
+            help=f"Explicitly disable {name}",
+        )
+        return group
 
     @classmethod
-    @abc.abstractmethod
-    def output_formats(cls):
+    def add_args(cls, parser: ArgumentParser):
         """
-        Returns a list of supported output formats
+        Add arguments to the argument parser.
+        """
+        cls.add_arg_group(parser)
+
+    @classmethod
+    def request(cls, output_format):
+        """
+        Yields input formats that would allow this processor to
+        produce the requested output format.
         """
         pass
 
 
-def get_processors():
+def get_processors() -> list[Processor]:
     """
-    Return a list of processors
+    Return a list of all processors
     """
     processors = []
 

@@ -3,9 +3,9 @@ import sys
 from . import Input
 
 
-class StdInput(Input):
+class StdIn(Input):
     """
-    Takes stdin as input
+    Takes stdin as input.
     """
 
     @classmethod
@@ -39,9 +39,3 @@ class StdInput(Input):
             return False
 
         return True
-
-    @classmethod
-    def add_args(cls, parser):
-        parser.add_argument(
-            "--stdin", action="store_true", default=False, help="Read from stdin."
-        )

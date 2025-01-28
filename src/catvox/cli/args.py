@@ -1,10 +1,12 @@
 import argparse
 
+from .hidden_groups import HiddenGroups
+
 
 class other:
     """
-    Placeholder type for arguments that should copy their default
-    value from another argument.
+    Placeholder type for arguments that copy their default value from
+    another argument.
     """
 
     def __init__(self, source):
@@ -22,9 +24,9 @@ class other:
         return value
 
 
-class ArgumentParser(argparse.ArgumentParser):
+class ArgumentParser(HiddenGroups, argparse.ArgumentParser):
     """
-    ArgumentParser subclass that allows arguments to copy some other value
+    ArgumentParser subclass with tweaks for the project.
     """
 
     def parse_args(self, *args, **kwargs):
