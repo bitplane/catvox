@@ -9,17 +9,6 @@ class StdIn(Input):
     """
 
     @classmethod
-    def _stdin_has_data(cls):
-        """
-        Peek at the first byte of stdin to see if there is any data.
-        """
-        try:
-            has_data = bool(sys.stdin.buffer.peek(1))
-            return has_data
-        except (BrokenPipeError, OSError):
-            return False
-
-    @classmethod
     def check_args(cls, args):
         """
         Check if the processor is available with the given arguments.

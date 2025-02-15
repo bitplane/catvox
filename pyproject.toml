@@ -10,7 +10,8 @@ dependencies = [
     "openai-whisper",
     "sounddevice",
     "torch_weightsonly",
-    "streamz"
+    "streamz",
+    "pydantic"
 ]
 
 [project.optional-dependencies]

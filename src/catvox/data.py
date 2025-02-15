@@ -7,7 +7,7 @@ class Data:
         self.data = data
         self.metadata = metadata or {}
 
-    def match(self, pattern: dict, subtree=None):
+    def match(self, pattern: dict, subtree=None) -> bool:
         """
         Check if the metadata matches the pattern
         """

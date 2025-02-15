@@ -1,9 +1,3 @@
-from .. import Processor
+from . import input
 
-
-class Input(Processor):
-    """
-    Input processors capture input from some kind of source.
-    This could be a microphone, a file, stdin, an URL.
-    They have no input formats, as they are the first processor in the pipeline.
-    """
+Input = input.Input
