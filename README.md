@@ -100,3 +100,10 @@ Currently building out some processors for input and output, to mentally
 explore pipeline resolver scenarios.
 
 Lots of the things are stubs at the moment,
+
+## Links
+
+* [🏠 home](https://bitplane.net/dev/python/catvox)
+* [🐱 github](https://github.com/bitplane/catvox)
+* [🐍 pypi](https://pypi.org/project/catvox)
+* [📖 pydoc](https://bitplane.net/dev/python/catvox/pydoc)
