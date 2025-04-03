@@ -20,7 +20,8 @@ dev = [
     "coverage",
     "pytest-cov",
     "build",
-    "twine"
+    "twine",
+    "pydoc-markdown"
 ]
 
 [build-system]
